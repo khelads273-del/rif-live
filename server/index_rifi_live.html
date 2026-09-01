@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RIFI LIVE</title>
+<style>body{margin:0;background:#09040f;color:#fff;font-family:Arial,sans-serif}main{max-width:430px;margin:auto;min-height:100vh;padding:24px;box-sizing:border-box}h1{color:#e79cff}.card{background:#171021;border:1px solid #3a2450;border-radius:18px;padding:18px;margin-top:18px}button{border:0;border-radius:22px;padding:12px 18px;background:#6c2bd9;color:#fff}.status{margin:14px 0;color:#bfe8c7}</style>
+</head><body><main>
+<h1>🎙️ RIFI LIVE</h1><div class="card"><b>مرحبًا بك في RIFI LIVE</b><p>النسخة المجانية التجريبية.</p><div id="status" class="status">جاري الاتصال بالسيرفر...</div><button onclick="checkServer()">إعادة الاتصال</button></div>
+<div class="card"><b>🎙️ الغرف</b><p>👑 غرفة خالد الرسمية</p><p>🌙 سهرة RIFI LIVE</p><p>🎮 Gaming Room</p></div>
+</main><script>
+const API="https://rif-live.onrender.com";
+async function checkServer(){const s=document.getElementById("status");s.textContent="جاري الاتصال بالسيرفر...";try{const r=await fetch(API,{cache:"no-store"});const d=await r.json();s.textContent=d.status==="online"?"🟢 السيرفر متصل — RIFI LIVE Online":"🟡 السيرفر استجاب"}catch(e){s.textContent="🔴 تعذر الاتصال بالسيرفر"}}
+checkServer();
+</script></body></html>
