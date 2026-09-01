@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>RIFI LIVE — Demo</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#05020b;color:#fff;font-family:Arial,"Noto Sans Arabic",sans-serif}
+button,input{font:inherit}.app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:radial-gradient(circle at 50% 30%,#2b1150 0,#0c0618 42%,#030208 100%);overflow:hidden;position:relative}
+.screen{display:none;min-height:100vh;padding:18px 14px 92px}.screen.active{display:block}
+.header{display:flex;align-items:center;gap:10px}.logo{font-size:25px;font-weight:900;color:#e79cff}.muted{color:#aaa;font-size:12px}.spacer{margin-right:auto}
+.btn{border:0;border-radius:22px;padding:11px 16px;color:#fff;background:#6c2bd9}.ghost{background:#171021;border:1px solid #392550}
+.card{background:rgba(22,12,37,.88);border:1px solid #34204a;border-radius:18px;padding:14px;margin-top:14px}
+.room{position:relative;min-height:120px;padding:16px;border-radius:20px;background:linear-gradient(135deg,#211037,#10091c);border:1px solid #492e68;margin-top:12px}
+.room b{font-size:17px}.room .users{color:#cda9ff;margin-top:7px;font-size:13px}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:72px;background:rgba(8,4,14,.96);border-top:1px solid #2b1a3b;display:flex;justify-content:space-around;align-items:center;z-index:10}
+.nav button{background:none;border:0;color:#9c91a9;font-size:11px}.nav .on{color:#d68cff}.nav span{display:block;font-size:24px;margin-bottom:2px}
+.roomtop{display:flex;align-items:center;gap:8px}.roomtop .close{margin-right:auto}.notice{text-align:center;background:#1d1130;border-radius:20px;padding:9px;margin:15px 0;color:#eee;font-size:13px}
+.seats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 4px;margin-top:18px}.seat{text-align:center;min-height:112px}.avatar{width:70px;height:70px;border-radius:50%;margin:auto;border:2px solid #9e48ff;display:flex;align-items:center;justify-content:center;font-size:26px;background:#1a1026;box-shadow:0 0 14px rgba(145,70,255,.35)}.empty{border-color:#55466b;color:#7c6b90;box-shadow:none}.host{transform:scale(1.08)}.host .avatar{border:3px solid #ffd35b;box-shadow:0 0 24px #c78926}.num{font-size:11px;color:#aaa;margin-bottom:3px}.name{font-size:13px;margin-top:5px}.diamond{font-size:11px;color:#d9a7ff;margin-top:2px}.badge{font-size:9px;background:#8d5b08;border-radius:12px;padding:3px 7px;display:inline-block;margin-top:3px}.chat{background:#10091a;border:1px solid #2e1d40;border-radius:16px;padding:8px;margin-top:12px;max-height:150px;overflow:auto}.msg{padding:5px;font-size:12px}.gift{background:#29132c;border-radius:12px;color:#ffd1ff}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.actions button{padding:10px 4px;border-radius:14px;color:#fff;background:#130b1d;border:1px solid #4b3160}.input{margin-top:9px;background:#17101f;color:#81768e;border-radius:22px;padding:12px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.show{display:flex}.sheet{width:100%;max-width:430px;background:#160c23;border-radius:24px 24px 0 0;padding:20px}.sheet h3{margin-top:0}.giftgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.giftitem{background:#241332;border:1px solid #4b2c62;border-radius:15px;padding:12px 4px;text-align:center;color:#fff}.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#7025c5;padding:11px 16px;border-radius:22px;display:none;z-index:30;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="app">
+<section id="home" class="screen active">
+  <div class="header"><div style="font-size:34px">🎙️</div><div><div class="logo">RIFI LIVE</div><div class="muted">نسخة تجريبية مجانية</div></div><div class="spacer"></div><button class="btn" onclick="show('profile')">👤</button></div>
+  <div class="card"><b>مرحبًا بك 👋</b><p class="muted">ادخل غرفة وجرب الصوت والهدايا والألعاب.</p><button class="btn" onclick="show('room')">🎙️ دخول الغرفة</button></div>
+  <h3>🔥 الغرف النشطة</h3>
+  <div class="room" onclick="show('room')"><b>👑 غرفة خالد الرسمية</b><div class="users">👥 8 / 14 • 🎁 1.2K هدية تجريبية</div></div>
+  <div class="room"><b>🌙 سهرة RIFI LIVE</b><div class="users">👥 5 / 14 • 🎮 ألعاب</div></div>
+  <div class="room"><b>🎮 Gaming Room</b><div class="users">👥 3 / 10 • 🏆 تحدي</div></div>
+</section>
+
+<section id="room" class="screen">
+  <div class="roomtop"><button class="btn ghost" onclick="show('home')">←</button><div><b>👑 غرفة خالد الرسمية</b><div class="muted">ID: 100025 • 👥 8</div></div><div class="close">⚙️</div></div>
+  <div class="notice">🔊 مرحبًا بكم في غرفة RIFI LIVE الرسمية 👑</div>
+  <div style="display:flex;justify-content:space-between;color:#d7b6ff;font-size:12px"><span>🔥 ترتيب الغرفة</span><span>🪙 10,000 تجريبي</span></div>
+  <div class="seats" id="seats"></div>
+  <div class="chat" id="chat">
+    <div class="msg">🟣 <b>RIFI LIVE</b>: مرحبًا بالجميع 🌹</div>
+    <div class="msg">👩 Nawal: أهلًا وسهلًا خالد ❤️</div>
+    <div class="msg">👨 Sami: صوتك واضح اليوم 🔥</div>
+    <div class="msg gift">🎁 Nawal أرسلت تاجًا ذهبيًا إلى Khaled ×1</div>
+  </div>
+  <div class="actions">
+    <button onclick="mic()">🎤 طلب المايك</button><button onclick="gifts()">🎁 هدية</button><button onclick="game()">🎮 ألعاب</button>
+  </div>
+  <div class="input" onclick="message()">اكتب رسالة... 😊</div>
+</section>
+
+<section id="profile" class="screen">
+  <div class="header"><button class="btn ghost" onclick="show('home')">←</button><div><div class="logo">الملف الشخصي</div><div class="muted">RIFI LIVE</div></div></div>
+  <div class="card" style="text-align:center"><div style="font-size:70px">🕶️</div><h2>Khaled Rifi</h2><div class="muted">ID: 79553165</div><p>⭐ Level 12 • 💎 2,500 • 🪙 10,000</p><button class="btn" onclick="toast('هذه نسخة تجريبية — الحساب محلي')">✏️ تعديل</button></div>
+</section>
+
+<div class="nav"><button class="on" onclick="show('home')"><span>🏠</span>الرئيسية</button><button onclick="show('room')"><span>🎙️</span>الغرفة</button><button onclick="gifts()"><span>🎁</span>الهدايا</button><button onclick="game()"><span>🎮</span>الألعاب</button><button onclick="show('profile')"><span>👤</span>حسابي</button></div>
+</div>
+
+<div id="giftModal" class="modal" onclick="if(event.target===this)this.classList.remove('show')"><div class="sheet"><h3>🎁 هدايا تجريبية</h3><div class="giftgrid">
+<button class="giftitem" onclick="sendGift('🌹 وردة')">🌹<br>وردة<br>10 🪙</button>
+<button class="giftitem" onclick="sendGift('💎 ألماسة')">💎<br>ألماسة<br>50 🪙</button>
+<button class="giftitem" onclick="sendGift('👑 تاج')">👑<br>تاج<br>100 🪙</button>
+<button class="giftitem" onclick="sendGift('🦁 أسد')">🦁<br>أسد<br>500 🪙</button>
+</div><br><button class="btn ghost" onclick="this.closest('.modal').classList.remove('show')">إغلاق</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const people=[['🕶️','Khaled Rifi','5.6K',true],['👩🏻','Nawal','2.8K'],['🧔🏻','Sami','2.1K'],['👩🏼','Imane','1.5K'],['👩🏻','Sara','1.2K'],['🛋️','مقعد فارغ','',false,true],['👨🏻','Yassine','980'],['🛋️','مقعد فارغ','',false,true],['👩🏻','Meriem','860'],['🛋️','مقعد فارغ','',false,true],['🛋️','مقعد فارغ','',false,true],['👩🏻','Lina','700'],['🛋️','مقعد فارغ','',false,true],['🛋️','مقعد فارغ','',false,true]];
+const seats=document.getElementById('seats');
+people.forEach((p,i)=>{let d=document.createElement('div');d.className='seat'+(p[3]?' host':'');d.innerHTML=`<div class="num">${i+1}</div><div class="avatar ${p[4]?'empty':''}">${p[0]}</div><div class="name">${p[1]}</div>${p[4]?'':p[3]?'<div class="badge">👑 HOST</div>':`<div class="diamond">💎 ${p[2]}</div>`}`;seats.appendChild(d)});
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
+function mic(){toast('🎤 تم إرسال طلب المايك إلى صاحب الغرفة')}
+function gifts(){document.getElementById('giftModal').classList.add('show')}
+function sendGift(g){document.getElementById('giftModal').classList.remove('show');document.getElementById('chat').insertAdjacentHTML('beforeend',`<div class="msg gift">🎁 أنت أرسلت ${g} إلى Nawal ×1</div>`);toast('🎁 تم إرسال الهدية التجريبية')}
+function game(){toast('🎮 Lucky Wheel — اللعبة التجريبية ستضاف في المرحلة التالية')}
+function message(){toast('💬 الدردشة التجريبية جاهزة — سنربطها لاحقًا بالمستخدمين الحقيقيين')}
+</script>
+
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+<script>
+/*
+ RIFI LIVE Stage 4:
+ This block adds the realtime room foundation.
+ It expects a Socket.IO server URL in window.RIFI_SERVER_URL.
+ Example:
+   window.RIFI_SERVER_URL = "https://YOUR-SERVER.example.com";
+*/
+window.RIFI_SERVER_URL = window.RIFI_SERVER_URL || "";
+let rifiSocket = null;
+let localUser = {
+  id: "u_" + Math.random().toString(36).slice(2,10),
+  name: "Khaled Rifi"
+};
+
+function connectRifiRealtime(){
+  if(!window.RIFI_SERVER_URL){
+    toast("🎙️ وضع التجربة: السيرفر لم يُربط بعد");
+    return;
+  }
+  rifiSocket = io(window.RIFI_SERVER_URL, {transports:["websocket"]});
+  rifiSocket.on("connect", ()=>{
+    rifiSocket.emit("joinRoom", {
+      roomId:"100025",
+      user:localUser
+    });
+  });
+  rifiSocket.on("roomState", state=>{
+    const count = document.querySelector("#room .roomtop .muted");
+    if(count) count.textContent = "ID: 100025 • 👥 " + state.users.length;
+    toast("🟢 تم الاتصال بالغرفة");
+  });
+  rifiSocket.on("systemMessage", msg=>{
+    const chat=document.getElementById("chat");
+    if(chat) chat.insertAdjacentHTML("beforeend",
+      `<div class="msg">🟣 <b>RIFI LIVE</b>: ${msg}</div>`);
+  });
+  rifiSocket.on("userJoined", user=>{
+    toast("👋 دخل " + user.name + " إلى الغرفة");
+  });
+  rifiSocket.on("userLeft", user=>{
+    toast("👋 خرج " + user.name + " من الغرفة");
+  });
+}
+
+const oldShow = window.show;
+window.show = function(id){
+  oldShow(id);
+  if(id==="room" && !rifiSocket) connectRifiRealtime();
+};
+
+function sendRealtimeMessage(text){
+  if(!rifiSocket || !text.trim()) return;
+  rifiSocket.emit("chatMessage", {roomId:"100025", text:text.trim()});
+}
+
+if(typeof window.message === "function"){
+  const oldMessage=window.message;
+  window.message=function(){
+    const text=prompt("اكتب رسالتك");
+    if(text) sendRealtimeMessage(text);
+    else oldMessage();
+  }
+}
+</script>
+
+</body>
+</html>
