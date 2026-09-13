@@ -1,148 +1,879 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>RIFI LIVE — Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0c">
+<title>RIFI LIVE - تحدي السرعة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#05020b;color:#fff;font-family:Arial,"Noto Sans Arabic",sans-serif}
-button,input{font:inherit}.app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:radial-gradient(circle at 50% 30%,#2b1150 0,#0c0618 42%,#030208 100%);overflow:hidden;position:relative}
-.screen{display:none;min-height:100vh;padding:18px 14px 92px}.screen.active{display:block}
-.header{display:flex;align-items:center;gap:10px}.logo{font-size:25px;font-weight:900;color:#e79cff}.muted{color:#aaa;font-size:12px}.spacer{margin-right:auto}
-.btn{border:0;border-radius:22px;padding:11px 16px;color:#fff;background:#6c2bd9}.ghost{background:#171021;border:1px solid #392550}
-.card{background:rgba(22,12,37,.88);border:1px solid #34204a;border-radius:18px;padding:14px;margin-top:14px}
-.room{position:relative;min-height:120px;padding:16px;border-radius:20px;background:linear-gradient(135deg,#211037,#10091c);border:1px solid #492e68;margin-top:12px}
-.room b{font-size:17px}.room .users{color:#cda9ff;margin-top:7px;font-size:13px}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:72px;background:rgba(8,4,14,.96);border-top:1px solid #2b1a3b;display:flex;justify-content:space-around;align-items:center;z-index:10}
-.nav button{background:none;border:0;color:#9c91a9;font-size:11px}.nav .on{color:#d68cff}.nav span{display:block;font-size:24px;margin-bottom:2px}
-.roomtop{display:flex;align-items:center;gap:8px}.roomtop .close{margin-right:auto}.notice{text-align:center;background:#1d1130;border-radius:20px;padding:9px;margin:15px 0;color:#eee;font-size:13px}
-.seats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 4px;margin-top:18px}.seat{text-align:center;min-height:112px}.avatar{width:70px;height:70px;border-radius:50%;margin:auto;border:2px solid #9e48ff;display:flex;align-items:center;justify-content:center;font-size:26px;background:#1a1026;box-shadow:0 0 14px rgba(145,70,255,.35)}.empty{border-color:#55466b;color:#7c6b90;box-shadow:none}.host{transform:scale(1.08)}.host .avatar{border:3px solid #ffd35b;box-shadow:0 0 24px #c78926}.num{font-size:11px;color:#aaa;margin-bottom:3px}.name{font-size:13px;margin-top:5px}.diamond{font-size:11px;color:#d9a7ff;margin-top:2px}.badge{font-size:9px;background:#8d5b08;border-radius:12px;padding:3px 7px;display:inline-block;margin-top:3px}.chat{background:#10091a;border:1px solid #2e1d40;border-radius:16px;padding:8px;margin-top:12px;max-height:150px;overflow:auto}.msg{padding:5px;font-size:12px}.gift{background:#29132c;border-radius:12px;color:#ffd1ff}
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.actions button{padding:10px 4px;border-radius:14px;color:#fff;background:#130b1d;border:1px solid #4b3160}.input{margin-top:9px;background:#17101f;color:#81768e;border-radius:22px;padding:12px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.show{display:flex}.sheet{width:100%;max-width:430px;background:#160c23;border-radius:24px 24px 0 0;padding:20px}.sheet h3{margin-top:0}.giftgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.giftitem{background:#241332;border:1px solid #4b2c62;border-radius:15px;padding:12px 4px;text-align:center;color:#fff}.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#7025c5;padding:11px 16px;border-radius:22px;display:none;z-index:30;white-space:nowrap}
+*{font-family:'Cairo',sans-serif;box-sizing:border-box}
+body{background:#050508;color:#fff;margin:0;overflow-x:hidden}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:#D4AF37;border-radius:10px}
+.gold-text{background:linear-gradient(135deg,#FFD700 0%,#D4AF37 50%,#B8941F 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gold-bg{background:linear-gradient(135deg,#FFD700 0%,#D4AF37 40%,#AA8A1A 100%)}
+.gold-border{border:1px solid rgba(212,175,55,.35)}
+.gold-glow{box-shadow:0 0 20px rgba(212,175,55,.25),0 4px 20px rgba(0,0,0,.6)}
+.card-bg{background:linear-gradient(180deg,#19191D 0%,#141418 100%);border:1px solid rgba(212,175,55,.18)}
+.shimmer{position:relative;overflow:hidden}
+.shimmer:after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,215,0,.18),transparent);animation:shimmer 2.8s infinite}
+@keyframes shimmer{0%{left:-100%}60%{left:150%}100%{left:150%}}
+@keyframes pulseGold{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.4)}50%{box-shadow:0 0 0 10px rgba(212,175,55,0)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes timerPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}100%{transform:scale(1);opacity:1}}
+@keyframes confettiFall{0%{transform:translateY(-10vh) rotate(0deg)}100%{transform:translateY(100vh) rotate(720deg)}}
+.timer-danger{color:#FF3B30 !important;animation:timerPulse .4s infinite}
+.opt-correct{background:linear-gradient(135deg,#00C950,#00913A)!important;border-color:#00C950!important;color:#fff!important}
+.opt-wrong{background:linear-gradient(135deg,#FF3B30,#CC1F1A)!important;border-color:#FF3B30!important;color:#fff!important}
+.opt-disabled{opacity:.45;pointer-events:none}
+.speaking{outline:2px solid #00E676; outline-offset:2px; animation:pulseGold 1.2s infinite}
+.app-frame{max-width:460px;margin:0 auto;min-height:100vh;background:#08080A;position:relative;border-left:1px solid rgba(212,175,55,.12);border-right:1px solid rgba(212,175,55,.12);display:flex;flex-direction:column}
+@media(min-width:900px){body{background:radial-gradient(800px 600px at 50% -10%,rgba(212,175,55,.15),transparent),#040405}.app-frame{margin:18px auto;border-radius:28px;overflow:hidden;min-height:calc(100vh - 36px);box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,55,.18)}}
+.view{animation:popIn .35s ease}
+.podium-1{transform:translateY(-12px)}
+.rank-gold{background:linear-gradient(135deg,#FFD700,#B8941F);color:#000}
+.rank-silver{background:linear-gradient(135deg,#E8E8E8,#9AA0A6);color:#000}
+.rank-bronze{background:linear-gradient(135deg,#CD7F32,#8B4513);color:#fff}
 </style>
 </head>
 <body>
-<div class="app">
-<section id="home" class="screen active">
-  <div class="header"><div style="font-size:34px">🎙️</div><div><div class="logo">RIFI LIVE</div><div class="muted">نسخة تجريبية مجانية</div></div><div class="spacer"></div><button class="btn" onclick="show('profile')">👤</button></div>
-  <div class="card"><b>مرحبًا بك 👋</b><p class="muted">ادخل غرفة وجرب الصوت والهدايا والألعاب.</p><button class="btn" onclick="show('room')">🎙️ دخول الغرفة</button></div>
-  <h3>🔥 الغرف النشطة</h3>
-  <div class="room" onclick="show('room')"><b>👑 غرفة خالد الرسمية</b><div class="users">👥 8 / 14 • 🎁 1.2K هدية تجريبية</div></div>
-  <div class="room"><b>🌙 سهرة RIFI LIVE</b><div class="users">👥 5 / 14 • 🎮 ألعاب</div></div>
-  <div class="room"><b>🎮 Gaming Room</b><div class="users">👥 3 / 10 • 🏆 تحدي</div></div>
-</section>
+<div class="app-frame">
+  <!-- AMBIENT -->
+  <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(ellipse at center,rgba(212,175,55,.14) 0%,transparent 70%);pointer-events:none;z-index:0"></div>
 
-<section id="room" class="screen">
-  <div class="roomtop"><button class="btn ghost" onclick="show('home')">←</button><div><b>👑 غرفة خالد الرسمية</b><div class="muted">ID: 100025 • 👥 8</div></div><div class="close">⚙️</div></div>
-  <div class="notice">🔊 مرحبًا بكم في غرفة RIFI LIVE الرسمية 👑</div>
-  <div style="display:flex;justify-content:space-between;color:#d7b6ff;font-size:12px"><span>🔥 ترتيب الغرفة</span><span>🪙 10,000 تجريبي</span></div>
-  <div class="seats" id="seats"></div>
-  <div class="chat" id="chat">
-    <div class="msg">🟣 <b>RIFI LIVE</b>: مرحبًا بالجميع 🌹</div>
-    <div class="msg">👩 Nawal: أهلًا وسهلًا خالد ❤️</div>
-    <div class="msg">👨 Sami: صوتك واضح اليوم 🔥</div>
-    <div class="msg gift">🎁 Nawal أرسلت تاجًا ذهبيًا إلى Khaled ×1</div>
+  <!-- HEADER -->
+  <header class="relative z-10" style="background:linear-gradient(180deg,#000 0%,#0B0B0D 100%);border-bottom:1px solid rgba(212,175,55,.25)">
+    <div class="flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl gold-bg flex items-center justify-center shadow-lg"><i class="fa-solid fa-crown text-black text-[18px]"></i></div>
+        <div>
+          <div class="font-black text-[17px] tracking-widest gold-text leading-none" style="font-family:'Tajawal',sans-serif">RIFI LIVE</div>
+          <div class="text-[10px] text-[#D4AF37] tracking-[.2em] font-bold -mt-1">ريفي لايف</div>
+        </div>
+        <span class="mr-2 bg-[#1A1A1E] border border-[rgba(212,175,55,.25)] text-[#FFD700] text-[10px] px-2 py-1 rounded-full font-bold">غرفة VIP</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 bg-[#141418] border border-[rgba(212,175,55,.2)] rounded-full px-2.5 py-1.5">
+          <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+          <span class="text-[11px] font-bold text-white">1,248</span>
+          <i class="fa-solid fa-users text-[#D4AF37] text-[10px]"></i>
+        </div>
+        <button class="w-8 h-8 rounded-full bg-[#1A1A1E] border border-[rgba(212,175,55,.2)] flex items-center justify-center"><i class="fa-solid fa-bell text-[#D4AF37] text-xs"></i></button>
+      </div>
+    </div>
+    <!-- ROOM BAR -->
+    <div class="mx-3 mb-3 rounded-2xl p-3 flex items-center justify-between" style="background:linear-gradient(135deg,#1B1B1E 0%,#111113 100%);border:1px solid rgba(212,175,55,.18)">
+      <div class="flex items-center gap-3">
+        <img src="https://i.pravatar.cc/100?img=33" class="w-10 h-10 rounded-full border-2 border-[#D4AF37] object-cover">
+        <div>
+          <div class="font-extrabold text-[13px] flex items-center gap-1.5">غرفة النجوم الذهبية <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span></div>
+          <div class="text-[11px] text-zinc-400 flex items-center gap-2"><span><i class="fa-solid fa-microphone text-emerald-400 ml-1"></i>5 متحدثين</span> <span class="w-1 h-1 bg-zinc-600 rounded-full"></span> <span>ID: 8827391</span></div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <span class="text-[10px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded-full font-bold">● على الهواء</span>
+        <button id="btnVoiceToggle" class="w-8 h-8 rounded-full gold-bg flex items-center justify-center"><i class="fa-solid fa-microphone text-black text-xs"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VOICE STRIP (always) -->
+  <div id="voiceStrip" class="relative z-10 px-3 py-3 flex gap-3 overflow-x-auto" style="background:#0E0E10;border-bottom:1px solid rgba(212,175,55,.1)">
+    <!-- injected by JS -->
   </div>
-  <div class="actions">
-    <button onclick="mic()">🎤 طلب المايك</button><button onclick="gifts()">🎁 هدية</button><button onclick="game()">🎮 ألعاب</button>
+
+  <!-- MAIN -->
+  <main class="flex-1 relative z-10 overflow-y-auto" style="background:radial-gradient(600px 400px at 50% 0%,rgba(212,175,55,.06),transparent),#08080A">
+    
+    <!-- VIEW: ROOM -->
+    <section id="view-room" class="view p-4">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-black text-[15px] flex items-center gap-2"><span class="w-1 h-5 gold-bg rounded-full"></span> المتواجدون في الغرفة</h2>
+        <span class="text-[11px] bg-[#1A1A1E] border border-[rgba(212,175,55,.2)] px-2.5 py-1 rounded-full text-zinc-300">الصوت نشط <i class="fa-solid fa-volume-high text-emerald-400 mr-1"></i></span>
+      </div>
+      <div id="roomGrid" class="grid grid-cols-4 gap-3 mb-4"></div>
+
+      <div class="card-bg rounded-[22px] p-4 gold-glow mb-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-black text-[14px] flex items-center gap-2"><i class="fa-solid fa-gamepad text-[#FFD700]"></i> ألعاب الغرفة</h3>
+          <span class="text-[10px] bg-[#FFD700] text-black px-2 py-1 rounded-full font-black">3 ألعاب متاحة</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2.5">
+          <div id="cardSpeed" class="cursor-pointer rounded-2xl p-3 text-center relative overflow-hidden shimmer" style="background:linear-gradient(135deg,#FFD700 0%,#D4AF37 55%,#8C6B1A 100%);border:2px solid #FFD700">
+            <span class="absolute -top-1 -left-1 bg-black text-[#FFD700] text-[9px] px-2 py-0.5 rounded-full font-black rotate-[-8deg]">جديد 🔥</span>
+            <div class="w-12 h-12 mx-auto bg-black/15 backdrop-blur rounded-2xl flex items-center justify-center text-2xl mb-2">⚡</div>
+            <div class="font-black text-black text-[13px] leading-none">تحدي السرعة</div>
+            <div class="text-[10px] text-black/70 font-bold">5 جولات • 10 ث</div>
+            <div class="mt-2 bg-black text-[#FFD700] text-[11px] py-1 rounded-full font-black">العب الآن</div>
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-black/20"></div>
+          </div>
+          <div class="rounded-2xl p-3 text-center opacity-60" style="background:#1A1A1E;border:1px solid rgba(255,255,255,.08)">
+            <div class="w-12 h-12 mx-auto bg-white/5 rounded-2xl flex items-center justify-center text-xl mb-2">🎲</div>
+            <div class="font-bold text-white text-[12px]">لعبة الحظ</div>
+            <div class="text-[10px] text-zinc-500">قريباً</div>
+          </div>
+          <div class="rounded-2xl p-3 text-center opacity-60" style="background:#1A1A1E;border:1px solid rgba(255,255,255,.08)">
+            <div class="w-12 h-12 mx-auto bg-white/5 rounded-2xl flex items-center justify-center text-xl mb-2">🧩</div>
+            <div class="font-bold text-white text-[12px]">الذكاء</div>
+            <div class="text-[10px] text-zinc-500">قريباً</div>
+          </div>
+        </div>
+        <div class="mt-3 flex items-center gap-2 text-[11px] text-zinc-400 bg-black/30 rounded-full px-3 py-2 border border-white/5">
+          <i class="fa-solid fa-circle-info text-[#D4AF37]"></i> النقاط افتراضية فقط • بدون مال حقيقي • للمتعة فقط
+        </div>
+      </div>
+
+      <button id="btnGoGames" class="w-full gold-bg text-black font-black py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg active:scale-[.98] transition">
+        <i class="fa-solid fa-bolt"></i> دخول الألعاب • Games
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </button>
+      <div class="mt-3 grid grid-cols-3 gap-2">
+        <div class="card-bg rounded-2xl p-3 text-center">
+          <div class="text-[#FFD700] font-black text-lg">2.4K</div><div class="text-[10px] text-zinc-400">نقطة اليوم</div>
+        </div>
+        <div class="card-bg rounded-2xl p-3 text-center">
+          <div class="text-emerald-400 font-black text-lg">#12</div><div class="text-[10px] text-zinc-400">ترتيبك</div>
+        </div>
+        <div class="card-bg rounded-2xl p-3 text-center">
+          <div class="text-white font-black text-lg">18</div><div class="text-[10px] text-zinc-400">فوز</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: GAMES LIST -->
+    <section id="view-games" class="view hidden p-4">
+      <button id="btnBackToRoom" class="flex items-center gap-2 text-sm text-zinc-400 mb-3"><i class="fa-solid fa-chevron-right"></i> العودة للغرفة</button>
+      <h2 class="font-black text-[18px] mb-1 flex items-center gap-2"><i class="fa-solid fa-trophy text-[#FFD700]"></i> ألعاب ريفي لايف</h2>
+      <p class="text-[12px] text-zinc-400 mb-4">اختر لعبة للعب مع أصدقاء الغرفة — الصوت يبقى نشطاً</p>
+      
+      <div class="card-bg rounded-[22px] overflow-hidden gold-glow">
+        <div class="h-28 relative flex items-center justify-center" style="background:linear-gradient(135deg,#FFD700 0%,#D4AF37 50%,#8C6B1A 100%)">
+          <div class="absolute inset-0 opacity-20" style="background:radial-gradient(300px 200px at 30% 20%,white,transparent)"></div>
+          <div class="text-6xl drop-shadow-xl" style="animation:floatY 2.5s infinite">⚡</div>
+          <span class="absolute top-3 left-3 bg-black text-[#FFD700] text-xs px-3 py-1 rounded-full font-black">الأكثر لعباً</span>
+          <span class="absolute top-3 right-3 bg-white text-black text-xs px-2.5 py-1 rounded-full font-black flex items-center gap-1"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> 847 يلعبون</span>
+        </div>
+        <div class="p-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-black text-[17px]">تحدي السرعة</h3>
+              <p class="text-[12px] text-zinc-400 mt-1 leading-5">أجب بسرعة قبل الجميع! كلما كنت أسرع، حصلت على نقاط أكثر. 5 جولات حماسية.</p>
+            </div>
+            <span class="bg-[#FFD700] text-black text-[11px] px-2.5 py-1 rounded-full font-black">SPEED</span>
+          </div>
+          <div class="flex gap-2 mt-3">
+            <span class="text-[11px] bg-[#1E1E22] border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-users text-[#D4AF37]"></i> 2-8 لاعبين</span>
+            <span class="text-[11px] bg-[#1E1E22] border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-clock text-[#D4AF37]"></i> ~50 ثانية</span>
+            <span class="text-[11px] bg-[#1E1E22] border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-bolt text-[#D4AF37]"></i> سريع</span>
+          </div>
+          <button id="btnOpenSpeed" class="w-full mt-4 gold-bg text-black font-black py-3.5 rounded-2xl flex items-center justify-center gap-2 active:scale-[.98] transition"><i class="fa-solid fa-play"></i> دخول تحدي السرعة</button>
+          <div class="text-center text-[11px] text-zinc-500 mt-2">نقاط افتراضية • بدون رهان • للمتعة فقط</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="card-bg rounded-2xl p-4 opacity-60">
+          <div class="text-2xl mb-2">🎯</div><div class="font-bold text-sm">تحدي الدقة</div><div class="text-xs text-zinc-500">قريباً</div>
+        </div>
+        <div class="card-bg rounded-2xl p-4 opacity-60">
+          <div class="text-2xl mb-2">🧠</div><div class="font-bold text-sm">سؤال وجواب</div><div class="text-xs text-zinc-500">قريباً</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: INTRO -->
+    <section id="view-intro" class="view hidden p-4">
+      <button id="btnIntroBack" class="flex items-center gap-2 text-sm text-zinc-400 mb-3"><i class="fa-solid fa-chevron-right"></i> العودة للألعاب</button>
+      
+      <div class="rounded-[24px] overflow-hidden gold-glow" style="background:linear-gradient(180deg,#1A1A1E 0%,#111113 100%);border:1px solid rgba(212,175,55,.25)">
+        <div class="h-36 relative flex flex-col items-center justify-center text-center p-4" style="background:linear-gradient(135deg,#FFD700 0%,#D4AF37 55%,#8C6B1A 100%)">
+          <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-3xl shadow-xl mb-2">⚡</div>
+          <div class="font-black text-black text-[20px] leading-none">تحدي السرعة</div>
+          <div class="text-black/70 font-bold text-xs mt-1">SPEED CHALLENGE • غرفة النجوم الذهبية</div>
+          <div class="absolute bottom-3 flex gap-1.5">
+            <span class="bg-black text-[#FFD700] text-[10px] px-2.5 py-1 rounded-full font-bold">5 جولات</span>
+            <span class="bg-black text-[#FFD700] text-[10px] px-2.5 py-1 rounded-full font-bold">10 ثوانٍ</span>
+            <span class="bg-black text-[#FFD700] text-[10px] px-2.5 py-1 rounded-full font-bold">نقاط افتراضية</span>
+          </div>
+        </div>
+        <div class="p-4">
+          <h4 class="font-black text-sm mb-3 flex items-center gap-2"><span class="w-1 h-4 gold-bg rounded-full"></span> كيف تلعب؟</h4>
+          <div class="grid grid-cols-2 gap-2.5 mb-4">
+            <div class="bg-[#0F0F12] border border-white/5 rounded-2xl p-3">
+              <div class="w-8 h-8 rounded-xl gold-bg flex items-center justify-center mb-2"><i class="fa-solid fa-stopwatch text-black text-sm"></i></div>
+              <div class="font-bold text-xs">أسرع = نقاط أكثر</div><div class="text-[11px] text-zinc-400">1000 نقطة للأسرع</div>
+            </div>
+            <div class="bg-[#0F0F12] border border-white/5 rounded-2xl p-3">
+              <div class="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center mb-2"><i class="fa-solid fa-check text-white text-sm"></i></div>
+              <div class="font-bold text-xs">3-4 اختيارات</div><div class="text-[11px] text-zinc-400">اختر إجابة واحدة</div>
+            </div>
+            <div class="bg-[#0F0F12] border border-white/5 rounded-2xl p-3">
+              <div class="w-8 h-8 rounded-xl bg-violet-500 flex items-center justify-center mb-2"><i class="fa-solid fa-ranking-star text-white text-sm"></i></div>
+              <div class="font-bold text-xs">ترتيب مباشر</div><div class="text-[11px] text-zinc-400">بعد كل جولة</div>
+            </div>
+            <div class="bg-[#0F0F12] border border-white/5 rounded-2xl p-3">
+              <div class="w-8 h-8 rounded-xl bg-sky-500 flex items-center justify-center mb-2"><i class="fa-solid fa-microphone text-white text-sm"></i></div>
+              <div class="font-bold text-xs">الصوت مستمر</div><div class="text-[11px] text-zinc-400">تحدث أثناء اللعب</div>
+            </div>
+          </div>
+
+          <div class="bg-[#0F0F12] border border-[rgba(212,175,55,.15)] rounded-2xl p-3 mb-4">
+            <div class="font-bold text-xs mb-2 flex items-center gap-2"><i class="fa-solid fa-users text-[#D4AF37]"></i> اللاعبون في الغرفة (5)</div>
+            <div id="introPlayers" class="flex gap-2 flex-wrap"></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <button id="btnJoinGame" class="bg-[#1E1E22] border border-[rgba(212,175,55,.3)] text-white font-black py-3.5 rounded-2xl flex flex-col items-center justify-center gap-1 active:scale-[.98] transition">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-plus text-[#FFD700]"></i> انضم للعبة</span>
+              <span class="text-[10px] text-zinc-400 font-bold">Join Game</span>
+            </button>
+            <button id="btnStartGame" class="gold-bg text-black font-black py-3.5 rounded-2xl flex flex-col items-center justify-center gap-1 shadow-lg active:scale-[.98] transition shimmer">
+              <span class="flex items-center gap-1.5"><i class="fa-solid fa-rocket"></i> ابدأ اللعبة</span>
+              <span class="text-[10px] text-black/70 font-bold">Start Game</span>
+            </button>
+          </div>
+          <button id="btnLeaveIntro" class="w-full mt-2.5 bg-transparent border border-white/10 text-zinc-300 font-bold py-3 rounded-2xl flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-right-from-bracket"></i> مغادرة</button>
+          <div class="text-center text-[10px] text-zinc-500 mt-3 leading-4">تنبيه: هذه لعبة تجريبية للمتعة فقط. النقاط افتراضية ولا يمكن سحبها أو استبدالها بمال حقيقي. بدون مقامرة.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: WAITING -->
+    <section id="view-waiting" class="view hidden p-4">
+      <div class="card-bg rounded-[24px] p-6 text-center gold-glow">
+        <div class="w-20 h-20 mx-auto rounded-full gold-bg flex items-center justify-center text-3xl mb-4" style="animation:pulseGold 1.5s infinite">⚡</div>
+        <h3 class="font-black text-xl">جاري تجهيز التحدي...</h3>
+        <p class="text-sm text-zinc-400 mt-1">بانتظار انضمام اللاعبين — الصوت لا يزال نشطاً</p>
+        
+        <div id="waitingAvatars" class="flex justify-center gap-3 mt-6 flex-wrap"></div>
+        
+        <div class="mt-6 bg-black rounded-2xl p-4 border border-[rgba(212,175,55,.2)]">
+          <div class="text-[11px] text-zinc-400 font-bold tracking-widest">تبدأ اللعبة خلال</div>
+          <div id="countdownNum" class="font-black text-6xl gold-text leading-none mt-1">3</div>
+          <div class="w-full h-2 bg-white/10 rounded-full mt-3 overflow-hidden"><div id="countdownBar" class="h-full gold-bg transition-all duration-1000" style="width:100%"></div></div>
+        </div>
+        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full py-2 px-4"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> الميكروفون مفتوح — يمكنك التحدث</div>
+      </div>
+    </section>
+
+    <!-- VIEW: GAME -->
+    <section id="view-game" class="view hidden p-4">
+      <!-- top bar -->
+      <div class="flex items-center justify-between mb-3">
+        <button id="btnLeaveGame" class="text-xs bg-[#1A1A1E] border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-1.5"><i class="fa-solid fa-xmark"></i> مغادرة</button>
+        <div class="flex items-center gap-2">
+          <span id="roundBadge" class="bg-[#1A1A1E] border border-[rgba(212,175,55,.25)] text-[#FFD700] text-xs px-3 py-1.5 rounded-full font-black">الجولة 1 / 5</span>
+          <button id="btnViewRankingGame" class="bg-[#1A1A1E] border border-white/10 text-white text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-1"><i class="fa-solid fa-ranking-star text-[#FFD700]"></i> الترتيب</button>
+        </div>
+      </div>
+
+      <!-- timer -->
+      <div class="card-bg rounded-2xl p-3 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2 text-xs font-bold text-zinc-300"><i class="fa-solid fa-stopwatch text-[#FFD700]"></i> الوقت المتبقي</div>
+          <div id="timerText" class="font-black text-xl leading-none">10.0<span class="text-xs font-bold mr-1">ث</span></div>
+        </div>
+        <div class="w-full h-2.5 bg-black rounded-full overflow-hidden border border-white/5"><div id="timerBar" class="h-full rounded-full transition-all duration-100" style="width:100%;background:linear-gradient(90deg,#FFD700,#D4AF37)"></div></div>
+        <div class="flex justify-between text-[10px] text-zinc-500 mt-1.5"><span>أسرع = نقاط أكثر</span><span id="timerHint" class="text-[#FFD700] font-bold">أجب الآن!</span></div>
+      </div>
+
+      <!-- question -->
+      <div class="rounded-[22px] p-5 text-center relative overflow-hidden mb-3 gold-glow" style="background:linear-gradient(135deg,#1E1E22 0%,#141418 100%);border:1px solid rgba(212,175,55,.22)">
+        <div class="absolute top-3 left-3 w-8 h-8 rounded-full bg-[#FFD700] text-black flex items-center justify-center font-black text-sm" id="qEmoji">🐆</div>
+        <div class="absolute top-3 right-3 text-[10px] bg-white/10 border border-white/10 px-2 py-1 rounded-full">سؤال <span id="qNum">1</span></div>
+        <div id="questionText" class="font-black text-[16px] leading-7 mt-6">ما هو أسرع حيوان بري في العالم؟</div>
+        <div class="text-[11px] text-zinc-400 mt-2">اختر إجابة واحدة قبل انتهاء الوقت</div>
+      </div>
+
+      <!-- options -->
+      <div id="optionsGrid" class="grid grid-cols-1 gap-2.5 mb-3"></div>
+
+      <!-- live players -->
+      <div class="card-bg rounded-2xl p-3">
+        <div class="flex items-center justify-between mb-2.5">
+          <div class="font-bold text-xs flex items-center gap-2"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> إجابات مباشرة</div>
+          <div class="text-[10px] bg-black border border-white/10 px-2 py-1 rounded-full text-zinc-400" id="answeredCount">0 / 5 أجابوا</div>
+        </div>
+        <div id="livePlayers" class="flex gap-2.5 overflow-x-auto pb-1"></div>
+      </div>
+    </section>
+
+    <!-- VIEW: ROUND RESULT -->
+    <section id="view-roundResult" class="view hidden p-4">
+      <div class="text-center mb-4">
+        <div id="roundResultIcon" class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-3 gold-bg">✓</div>
+        <h3 id="roundResultTitle" class="font-black text-xl">انتهت الجولة!</h3>
+        <p id="roundResultSub" class="text-sm text-zinc-400 mt-1">الإجابة الصحيحة: <span class="text-emerald-400 font-black"></span></p>
+        <div id="myRoundPoints" class="inline-flex items-center gap-2 mt-3 bg-[#FFD700] text-black px-4 py-2 rounded-full font-black text-sm"></div>
+      </div>
+
+      <div class="card-bg rounded-2xl p-4 mb-3">
+        <div class="flex items-center justify-between mb-3">
+          <h4 class="font-black text-sm flex items-center gap-2"><i class="fa-solid fa-ranking-star text-[#FFD700]"></i> ترتيب الجولة</h4>
+          <span id="roundNumBadge" class="text-xs bg-black border border-white/10 px-2.5 py-1 rounded-full">الجولة 1/5</span>
+        </div>
+        <div id="roundRanking" class="space-y-2"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <button id="btnViewRankingRound" class="bg-[#1E1E22] border border-white/10 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2"><i class="fa-solid fa-list-ol text-[#FFD700]"></i> عرض الترتيب</button>
+        <button id="btnNextRound" class="gold-bg text-black font-black py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg active:scale-[.98] transition"><span id="nextRoundText">الجولة التالية</span> <i class="fa-solid fa-chevron-left"></i></button>
+      </div>
+      <div class="mt-3 text-center text-[11px] text-zinc-500 flex items-center justify-center gap-2"><span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> الصوت مستمر — تحدث مع الأصدقاء</div>
+    </section>
+
+    <!-- VIEW: FINAL -->
+    <section id="view-final" class="view hidden p-4">
+      <div class="text-center pt-2">
+        <div class="text-5xl mb-2">🏆</div>
+        <h2 class="font-black text-2xl gold-text">انتهى التحدي!</h2>
+        <p class="text-sm text-zinc-400 mt-1">الترتيب النهائي • نقاط افتراضية</p>
+      </div>
+
+      <!-- podium -->
+      <div class="mt-5 flex items-end justify-center gap-2 mb-4">
+        <div class="flex-1 max-w-[110px] text-center">
+          <img id="podium2Img" src="https://i.pravatar.cc/100?img=5" class="w-14 h-14 rounded-full border-2 border-zinc-400 mx-auto object-cover">
+          <div class="mt-2 bg-[#1E1E22] border border-zinc-500/30 rounded-2xl p-2.5" style="height:90px">
+            <div class="w-7 h-7 mx-auto rounded-full rank-silver flex items-center justify-center font-black text-sm">2</div>
+            <div id="podium2Name" class="font-bold text-xs mt-1.5 leading-none">سارة</div>
+            <div id="podium2Score" class="text-[11px] text-zinc-400 font-bold">0</div>
+          </div>
+        </div>
+        <div class="flex-1 max-w-[120px] text-center podium-1">
+          <div class="relative mx-auto w-fit">
+            <img id="podium1Img" src="https://i.pravatar.cc/100?img=11" class="w-16 h-16 rounded-full border-[3px] border-[#FFD700] mx-auto object-cover shadow-[0_0_18px_rgba(212,175,55,.6)]">
+            <div class="absolute -top-2 -right-2 w-7 h-7 bg-[#FFD700] rounded-full flex items-center justify-center"><i class="fa-solid fa-crown text-black text-xs"></i></div>
+          </div>
+          <div class="mt-2 rounded-2xl p-3 gold-glow" style="background:linear-gradient(180deg,#FFD700 0%,#B8941F 100%);height:118px">
+            <div class="w-8 h-8 mx-auto rounded-full bg-black text-[#FFD700] flex items-center justify-center font-black">1</div>
+            <div id="podium1Name" class="font-black text-sm mt-1.5 text-black leading-none">أنت</div>
+            <div id="podium1Score" class="text-xs font-black text-black/70">0 نقطة</div>
+            <div class="text-[10px] bg-black text-[#FFD700] rounded-full px-2 py-0.5 mt-1.5 inline-block font-black">الفائز 👑</div>
+          </div>
+        </div>
+        <div class="flex-1 max-w-[110px] text-center">
+          <img id="podium3Img" src="https://i.pravatar.cc/100?img=32" class="w-14 h-14 rounded-full border-2 border-[#CD7F32] mx-auto object-cover">
+          <div class="mt-2 bg-[#1E1E22] border border-[#CD7F32]/30 rounded-2xl p-2.5" style="height:78px">
+            <div class="w-7 h-7 mx-auto rounded-full rank-bronze flex items-center justify-center font-black text-sm">3</div>
+            <div id="podium3Name" class="font-bold text-xs mt-1.5 leading-none">أحمد</div>
+            <div id="podium3Score" class="text-[11px] text-zinc-400 font-bold">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-bg rounded-2xl p-4 mb-3">
+        <h4 class="font-black text-sm mb-3 flex items-center gap-2"><i class="fa-solid fa-list-ol text-[#FFD700]"></i> الترتيب النهائي الكامل</h4>
+        <div id="finalRanking" class="space-y-2"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5">
+        <button id="btnPlayAgain" class="gold-bg text-black font-black py-3.5 rounded-2xl flex items-center justify-center gap-2 shadow-lg"><i class="fa-solid fa-rotate"></i> العب مرة أخرى</button>
+        <button id="btnReturnToRoom" class="bg-[#1E1E22] border border-white/10 text-white font-bold py-3.5 rounded-2xl flex items-center justify-center gap-2"><i class="fa-solid fa-house"></i> العودة للغرفة</button>
+      </div>
+      <div class="text-center text-[10px] text-zinc-500 mt-3 leading-4">نقاط افتراضية للمتعة فقط • لا قيمة مالية • بدون مقامرة أو رهان</div>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM NAV -->
+  <nav class="relative z-10 grid grid-cols-4 gap-1 px-2 py-2" style="background:#0B0B0D;border-top:1px solid rgba(212,175,55,.15)">
+    <button class="flex flex-col items-center gap-1 py-1.5 rounded-xl bg-[rgba(212,175,55,.12)] border border-[rgba(212,175,55,.2)]">
+      <i class="fa-solid fa-house text-[#FFD700] text-[15px]"></i><span class="text-[10px] font-bold text-[#FFD700]">الغرفة</span>
+    </button>
+    <button id="bottomGames" class="flex flex-col items-center gap-1 py-1.5 rounded-xl">
+      <i class="fa-solid fa-gamepad text-zinc-500 text-[15px]"></i><span class="text-[10px] font-bold text-zinc-500">الألعاب</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 py-1.5 rounded-xl">
+      <i class="fa-solid fa-store text-zinc-500 text-[15px]"></i><span class="text-[10px] font-bold text-zinc-500">المتجر</span>
+    </button>
+    <button class="flex flex-col items-center gap-1 py-1.5 rounded-xl">
+      <i class="fa-solid fa-user text-zinc-500 text-[15px]"></i><span class="text-[10px] font-bold text-zinc-500">حسابي</span>
+    </button>
+  </nav>
+
+  <!-- RANKING MODAL -->
+  <div id="rankingModal" class="hidden fixed inset-0 z-50 flex items-end justify-center">
+    <div id="rankingBackdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="relative w-full max-w-[460px] bg-[#0F0F12] rounded-t-[28px] border-t border-[rgba(212,175,55,.25)] max-h-[78vh] overflow-hidden flex flex-col">
+      <div class="p-4 flex items-center justify-between border-b border-white/5">
+        <h3 class="font-black flex items-center gap-2"><i class="fa-solid fa-ranking-star text-[#FFD700]"></i> الترتيب الحالي</h3>
+        <button id="btnCloseRanking" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="modalRankingList" class="p-4 space-y-2 overflow-y-auto"></div>
+      <div class="p-4"><button id="btnCloseRanking2" class="w-full bg-[#1E1E22] border border-white/10 py-3 rounded-2xl font-bold">إغلاق</button></div>
+    </div>
   </div>
-  <div class="input" onclick="message()">اكتب رسالة... 😊</div>
-</section>
 
-<section id="profile" class="screen">
-  <div class="header"><button class="btn ghost" onclick="show('home')">←</button><div><div class="logo">الملف الشخصي</div><div class="muted">RIFI LIVE</div></div></div>
-  <div class="card" style="text-align:center"><div style="font-size:70px">🕶️</div><h2>Khaled Rifi</h2><div class="muted">ID: 79553165</div><p>⭐ Level 12 • 💎 2,500 • 🪙 10,000</p><button class="btn" onclick="toast('هذه نسخة تجريبية — الحساب محلي')">✏️ تعديل</button></div>
-</section>
-
-<div class="nav"><button class="on" onclick="show('home')"><span>🏠</span>الرئيسية</button><button onclick="show('room')"><span>🎙️</span>الغرفة</button><button onclick="gifts()"><span>🎁</span>الهدايا</button><button onclick="game()"><span>🎮</span>الألعاب</button><button onclick="show('profile')"><span>👤</span>حسابي</button></div>
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-40 hidden"></canvas>
 </div>
 
-<div id="giftModal" class="modal" onclick="if(event.target===this)this.classList.remove('show')"><div class="sheet"><h3>🎁 هدايا تجريبية</h3><div class="giftgrid">
-<button class="giftitem" onclick="sendGift('🌹 وردة')">🌹<br>وردة<br>10 🪙</button>
-<button class="giftitem" onclick="sendGift('💎 ألماسة')">💎<br>ألماسة<br>50 🪙</button>
-<button class="giftitem" onclick="sendGift('👑 تاج')">👑<br>تاج<br>100 🪙</button>
-<button class="giftitem" onclick="sendGift('🦁 أسد')">🦁<br>أسد<br>500 🪙</button>
-</div><br><button class="btn ghost" onclick="this.closest('.modal').classList.remove('show')">إغلاق</button></div></div>
-<div class="toast" id="toast"></div>
 <script>
-const people=[['🕶️','Khaled Rifi','5.6K',true],['👩🏻','Nawal','2.8K'],['🧔🏻','Sami','2.1K'],['👩🏼','Imane','1.5K'],['👩🏻','Sara','1.2K'],['🛋️','مقعد فارغ','',false,true],['👨🏻','Yassine','980'],['🛋️','مقعد فارغ','',false,true],['👩🏻','Meriem','860'],['🛋️','مقعد فارغ','',false,true],['🛋️','مقعد فارغ','',false,true],['👩🏻','Lina','700'],['🛋️','مقعد فارغ','',false,true],['🛋️','مقعد فارغ','',false,true]];
-const seats=document.getElementById('seats');
-people.forEach((p,i)=>{let d=document.createElement('div');d.className='seat'+(p[3]?' host':'');d.innerHTML=`<div class="num">${i+1}</div><div class="avatar ${p[4]?'empty':''}">${p[0]}</div><div class="name">${p[1]}</div>${p[4]?'':p[3]?'<div class="badge">👑 HOST</div>':`<div class="diamond">💎 ${p[2]}</div>`}`;seats.appendChild(d)});
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',1800)}
-function mic(){toast('🎤 تم إرسال طلب المايك إلى صاحب الغرفة')}
-function gifts(){document.getElementById('giftModal').classList.add('show')}
-function sendGift(g){document.getElementById('giftModal').classList.remove('show');document.getElementById('chat').insertAdjacentHTML('beforeend',`<div class="msg gift">🎁 أنت أرسلت ${g} إلى Nawal ×1</div>`);toast('🎁 تم إرسال الهدية التجريبية')}
-function game(){toast('🎮 Lucky Wheel — اللعبة التجريبية ستضاف في المرحلة التالية')}
-function message(){toast('💬 الدردشة التجريبية جاهزة — سنربطها لاحقًا بالمستخدمين الحقيقيين')}
-</script>
+const playersBase = [
+  {id:'me', name:'أنت', sub:'أنت 👑', avatar:'https://i.pravatar.cc/100?img=11', color:'#FFD700', isMe:true},
+  {id:'sara', name:'سارة ✨', sub:'سارة', avatar:'https://i.pravatar.cc/100?img=5', color:'#FF7AC1'},
+  {id:'ahmed', name:'أحمد ⚡', sub:'أحمد', avatar:'https://i.pravatar.cc/100?img=32', color:'#60A5FA'},
+  {id:'noura', name:'نورة 💎', sub:'نورة', avatar:'https://i.pravatar.cc/100?img=9', color:'#A78BFA'},
+  {id:'fahad', name:'فهد 🦅', sub:'فهد', avatar:'https://i.pravatar.cc/100?img=15', color:'#FBBF24'},
+];
 
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-<script>
-/*
- RIFI LIVE Stage 4:
- This block adds the realtime room foundation.
- It expects a Socket.IO server URL in window.RIFI_SERVER_URL.
- Example:
-   window.RIFI_SERVER_URL = "https://YOUR-SERVER.example.com";
-*/
-window.RIFI_SERVER_URL = window.RIFI_SERVER_URL || "";
-let rifiSocket = null;
-let localUser = {
-  id: "u_" + Math.random().toString(36).slice(2,10),
-  name: "Khaled Rifi"
-};
+const questions = [
+  {q:"ما هو أسرع حيوان بري في العالم؟", opts:["الفهد","الأسد","النمر","الغزال"], correct:0, emoji:"🐆"},
+  {q:"كم عدد ألوان قوس قزح؟", opts:["5 ألوان","6 ألوان","7 ألوان","8 ألوان"], correct:2, emoji:"🌈"},
+  {q:"ما هي عاصمة المملكة العربية السعودية؟", opts:["جدة","الرياض","مكة","الدمام"], correct:1, emoji:"🇸🇦"},
+  {q:"كم عدد قارات العالم؟", opts:["5 قارات","6 قارات","7 قارات","8 قارات"], correct:2, emoji:"🌍"},
+  {q:"ما هو الكوكب الأحمر؟", opts:["الزهرة","المريخ","المشتري","زحل"], correct:1, emoji:"🪐"},
+];
 
-function connectRifiRealtime(){
-  if(!window.RIFI_SERVER_URL){
-    toast("🎙️ وضع التجربة: السيرفر لم يُربط بعد");
-    return;
+let players = JSON.parse(JSON.stringify(playersBase)).map(p=>({...p, score:0, lastCorrect:null, lastTime:null, answered:false}));
+let currentRound = 0;
+let timeLeft = 10;
+let timerInt = null;
+let botTimeouts = [];
+let hasAnswered = false;
+let userAnswerIdx = null;
+let currentView = 'room';
+let audioCtx = null;
+let isMuted = false;
+
+const $ = s=>document.querySelector(s);
+const $$ = s=>document.querySelectorAll(s);
+
+function playTone(freq, dur, type='sine', vol=0.15){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.value=vol;
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start();
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime+dur);
+    o.stop(audioCtx.currentTime+dur);
+  }catch(e){}
+}
+
+function showView(name){
+  ['room','games','intro','waiting','game','roundResult','final'].forEach(v=>{
+    const el = $('#view-'+v);
+    if(el) el.classList.toggle('hidden', v!==name);
+  });
+  currentView = name;
+  window.scrollTo(0,0);
+}
+
+function renderVoiceStrip(){
+  const c = $('#voiceStrip');
+  c.innerHTML = players.map(p=>`
+    <div class="flex flex-col items-center gap-1.5 min-w-[66px]">
+      <div class="relative">
+        <img src="${p.avatar}" class="w-12 h-12 rounded-full object-cover border-2 ${p.isMe?'border-[#FFD700]':'border-white/15'} ${Math.random()>0.6?'speaking':''}">
+        <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[10px] border-2 border-[#0E0E10] ${isMuted && p.isMe ? 'bg-red-500' : 'bg-emerald-500'}"><i class="fa-solid ${isMuted && p.isMe ? 'fa-microphone-slash' : 'fa-microphone'} text-white text-[9px]"></i></span>
+        ${p.isMe?'<span class="absolute -top-1 -left-1 bg-[#FFD700] text-black text-[8px] px-1 py-0.5 rounded-full font-black">أنت</span>':''}
+      </div>
+      <span class="text-[11px] font-bold leading-none ${p.isMe?'text-[#FFD700]':'text-white'}">${p.sub}</span>
+      <span class="text-[10px] ${p.score>0?'text-emerald-400':'text-zinc-500'} font-bold">${p.score} نقطة</span>
+    </div>
+  `).join('') + `
+    <div class="flex flex-col items-center gap-1.5 min-w-[66px] opacity-60">
+      <div class="w-12 h-12 rounded-full bg-white/5 border-2 border-dashed border-white/15 flex items-center justify-center"><i class="fa-solid fa-plus text-white/60"></i></div>
+      <span class="text-[11px] text-zinc-400">دعوة</span>
+    </div>
+  `;
+}
+
+function renderRoomGrid(){
+  const c = $('#roomGrid');
+  c.innerHTML = players.map(p=>`
+    <div class="card-bg rounded-2xl p-3 flex flex-col items-center gap-2 text-center">
+      <div class="relative">
+        <img src="${p.avatar}" class="w-14 h-14 rounded-full object-cover border-2 ${p.isMe?'border-[#FFD700]':'border-white/10'}">
+        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full font-black whitespace-nowrap flex items-center gap-1"><span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> يتحدث</span>
+      </div>
+      <div class="font-bold text-xs leading-none">${p.name}</div>
+      <div class="text-[10px] text-zinc-500">${p.isMe?'المضيف':'مستمع'}</div>
+      <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden"><div class="h-full bg-emerald-500 rounded-full" style="width:${40+Math.random()*60}%"></div></div>
+    </div>
+  `).join('');
+}
+
+function renderIntroPlayers(){
+  $('#introPlayers').innerHTML = players.map(p=>`
+    <div class="flex items-center gap-2 bg-[#0F0F12] border border-white/5 rounded-full pl-3 pr-1 py-1">
+      <img src="${p.avatar}" class="w-7 h-7 rounded-full object-cover">
+      <span class="text-xs font-bold">${p.name}</span>
+      <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+    </div>
+  `).join('');
+}
+
+function renderWaitingAvatars(){
+  $('#waitingAvatars').innerHTML = players.map((p,i)=>`
+    <div class="flex flex-col items-center gap-1" style="animation:popIn .4s ${i*0.08}s both">
+      <img src="${p.avatar}" class="w-12 h-12 rounded-full border-2 border-[#FFD700] object-cover">
+      <span class="text-[10px] font-bold">${p.sub}</span>
+      <span class="text-[9px] bg-emerald-500 text-white px-2 py-0.5 rounded-full">جاهز ✓</span>
+    </div>
+  `).join('');
+}
+
+function resetScores(){
+  players = JSON.parse(JSON.stringify(playersBase)).map(p=>({...p, score:0, lastCorrect:null, lastTime:null, answered:false}));
+  renderVoiceStrip();
+}
+
+function startWaiting(){
+  showView('waiting');
+  renderWaitingAvatars();
+  playTone(600,0.2,'sine',0.2);
+  let c=3;
+  $('#countdownNum').textContent=c;
+  $('#countdownBar').style.width='100%';
+  const int=setInterval(()=>{
+    c--;
+    if(c>0){
+      $('#countdownNum').textContent=c;
+      $('#countdownBar').style.width=(c/3*100)+'%';
+      playTone(700,0.15,'sine',0.2);
+      $('#countdownNum').style.transform='scale(1.15)';
+      setTimeout(()=>$('#countdownNum').style.transform='scale(1)',150);
+    } else {
+      clearInterval(int);
+      playTone(900,0.4,'sine',0.25);
+      setTimeout(()=>startRound(0),400);
+    }
+  },1000);
+}
+
+function startRound(idx){
+  currentRound=idx;
+  timeLeft=10;
+  hasAnswered=false;
+  userAnswerIdx=null;
+  botTimeouts.forEach(t=>clearTimeout(t)); botTimeouts=[];
+  players.forEach(p=>{p.answered=false; p.lastCorrect=null; p.lastTime=null;});
+
+  showView('game');
+  const q=questions[idx];
+  $('#qEmoji').textContent=q.emoji;
+  $('#qNum').textContent=idx+1;
+  $('#questionText').textContent=q.q;
+  $('#roundBadge').textContent=`الجولة ${idx+1} / 5`;
+  $('#timerText').innerHTML=`10.0<span class="text-xs font-bold mr-1">ث</span>`;
+  $('#timerBar').style.width='100%';
+  $('#timerBar').style.background='linear-gradient(90deg,#FFD700,#D4AF37)';
+  $('#timerHint').textContent='أجب الآن!';
+  $('#timerHint').className='text-[#FFD700] font-bold';
+  $('#timerText').classList.remove('timer-danger');
+
+  // options
+  const grid=$('#optionsGrid');
+  grid.innerHTML = q.opts.map((opt,i)=>`
+    <button data-idx="${i}" class="opt-btn w-full text-right bg-[#141418] border border-white/10 rounded-2xl px-4 py-3.5 flex items-center gap-3 hover:border-[rgba(212,175,55,.4)] active:scale-[.98] transition">
+      <span class="w-9 h-9 rounded-xl bg-[#1E1E22] border border-white/10 flex items-center justify-center font-black text-sm shrink-0">${['A','B','C','D'][i]}</span>
+      <span class="font-bold text-[14px] flex-1">${opt}</span>
+      <span class="w-6 h-6 rounded-full border-2 border-white/15 flex items-center justify-center shrink-0 check"><i class="fa-solid fa-check text-[11px] opacity-0"></i></span>
+    </button>
+  `).join('');
+  grid.querySelectorAll('.opt-btn').forEach(b=>{
+    b.addEventListener('click',()=>handleAnswer(parseInt(b.dataset.idx)));
+  });
+
+  renderLivePlayers();
+  updateAnsweredCount();
+
+  // timer
+  clearInterval(timerInt);
+  const start=Date.now();
+  timerInt=setInterval(()=>{
+    const elapsed=(Date.now()-start)/1000;
+    timeLeft=Math.max(0,10-elapsed);
+    $('#timerText').innerHTML=`${timeLeft.toFixed(1)}<span class="text-xs font-bold mr-1">ث</span>`;
+    $('#timerBar').style.width=(timeLeft/10*100)+'%';
+    if(timeLeft<=3){
+      $('#timerText').classList.add('timer-danger');
+      $('#timerBar').style.background='linear-gradient(90deg,#FF3B30,#FF6B55)';
+      $('#timerHint').textContent='أسرع!';
+      $('#timerHint').className='text-red-400 font-black';
+    }
+    if(timeLeft<=0){
+      clearInterval(timerInt);
+      endRound();
+    }
+  },80);
+
+  // bots
+  players.filter(p=>!p.isMe).forEach(p=>{
+    const delay= 700 + Math.random()*8200;
+    const t=setTimeout(()=>{
+      if(timeLeft<=0 || p.answered || hasAnswered && false) {}
+      if(p.answered) return;
+      if(timeLeft<=0.2) return;
+      const willCorrect = Math.random()<0.62 + (p.id==='sara'?0.12:0);
+      let ans;
+      if(willCorrect) ans=q.correct;
+      else {
+        const wrong = [0,1,2,3].filter(x=>x!==q.correct);
+        ans=wrong[Math.floor(Math.random()*wrong.length)];
+      }
+      const taken=10-timeLeft;
+      const pts = ans===q.correct ? Math.max(120, 1000 - Math.floor(taken*88) + (Math.random()>0.7?80:0)) : 0;
+      p.answered=true;
+      p.lastCorrect= ans===q.correct;
+      p.lastTime=taken;
+      if(p.lastCorrect) p.score+=pts;
+      renderLivePlayers();
+      updateAnsweredCount();
+      if(p.lastCorrect) playTone(500+Math.random()*200,0.08,'square',0.07);
+    },delay);
+    botTimeouts.push(t);
+  });
+}
+
+function handleAnswer(idx){
+  if(hasAnswered || timeLeft<=0) return;
+  hasAnswered=true;
+  userAnswerIdx=idx;
+  const q=questions[currentRound];
+  const taken=10-timeLeft;
+  const isCorrect= idx===q.correct;
+  const pts= isCorrect ? Math.max(200, 1000 - Math.floor(taken*88)) : 0;
+  const me=players.find(p=>p.isMe);
+  me.answered=true;
+  me.lastCorrect=isCorrect;
+  me.lastTime=taken;
+  if(isCorrect) me.score+=pts;
+
+  // UI feedback
+  const btns=[...document.querySelectorAll('.opt-btn')];
+  btns.forEach((b,i)=>{
+    b.classList.add('opt-disabled');
+    if(i===q.correct) b.classList.add('opt-correct');
+    if(i===idx && !isCorrect) b.classList.add('opt-wrong');
+    if(i===idx){
+      b.querySelector('.check').classList.add('bg-white','text-black');
+      b.querySelector('.check i').classList.remove('opacity-0');
+    }
+  });
+  playTone(isCorrect?880:220, isCorrect?0.35:0.5, isCorrect?'sine':'sawtooth',0.22);
+  renderLivePlayers();
+  updateAnsweredCount();
+  renderVoiceStrip();
+
+  // quick haptic
+  if(navigator.vibrate) navigator.vibrate(isCorrect?40:80);
+}
+
+function renderLivePlayers(){
+  $('#livePlayers').innerHTML = players.map(p=>{
+    let state='بانتظار...';
+    let dot='bg-zinc-600';
+    let badge='';
+    if(p.answered){
+      if(p.lastCorrect===true){ state=`أجاب • ${p.lastTime.toFixed(1)}ث`; dot='bg-emerald-500'; badge='<span class="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center"><i class="fa-solid fa-check text-white text-[8px]"></i></span>';}
+      else if(p.lastCorrect===false){ state='خطأ'; dot='bg-red-500'; badge='<span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center"><i class="fa-solid fa-xmark text-white text-[8px]"></i></span>';}
+    }
+    return `
+    <div class="flex flex-col items-center gap-1 min-w-[64px]">
+      <div class="relative">
+        <img src="${p.avatar}" class="w-11 h-11 rounded-full object-cover border-2 ${p.isMe?'border-[#FFD700]':'border-white/10'}">
+        ${badge}
+        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full border-2 border-[#141418] ${dot}"></span>
+      </div>
+      <span class="text-[11px] font-bold leading-none ${p.isMe?'text-[#FFD700]':''}">${p.sub}</span>
+      <span class="text-[9px] ${p.answered && p.lastCorrect?'text-emerald-400':'text-zinc-500'} font-bold whitespace-nowrap">${state}</span>
+    </div>`;
+  }).join('');
+}
+
+function updateAnsweredCount(){
+  const n=players.filter(p=>p.answered).length;
+  $('#answeredCount').textContent=`${n} / 5 أجابوا`;
+}
+
+function endRound(){
+  clearInterval(timerInt);
+  botTimeouts.forEach(t=>clearTimeout(t));
+  const q=questions[currentRound];
+  // reveal correct if not answered
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{
+    if(i===q.correct) b.classList.add('opt-correct');
+    b.classList.add('opt-disabled');
+  });
+  setTimeout(()=>showRoundResult(),900);
+}
+
+function showRoundResult(){
+  showView('roundResult');
+  const q=questions[currentRound];
+  const me=players.find(p=>p.isMe);
+  const correctText=q.opts[q.correct];
+  $('#roundResultSub').innerHTML=`الإجابة الصحيحة: <span class="text-emerald-400 font-black">${correctText}</span> ${q.emoji}`;
+  $('#roundNumBadge').textContent=`الجولة ${currentRound+1} / 5`;
+  if(me.lastCorrect===true){
+    $('#roundResultIcon').innerHTML='<i class="fa-solid fa-check text-black text-xl"></i>';
+    $('#roundResultIcon').className='w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-3 gold-bg';
+    $('#roundResultTitle').textContent='أحسنت! إجابة صحيحة';
+    $('#myRoundPoints').innerHTML=`<i class="fa-solid fa-bolt"></i> +${me.lastCorrect? Math.max(200,1000-Math.floor(me.lastTime*88)):0} نقطة • ${me.lastTime.toFixed(1)} ثانية`;
+    $('#myRoundPoints').className='inline-flex items-center gap-2 mt-3 bg-emerald-500 text-white px-4 py-2 rounded-full font-black text-sm';
+  } else if(me.lastCorrect===false){
+    $('#roundResultIcon').innerHTML='<i class="fa-solid fa-xmark text-white text-xl"></i>';
+    $('#roundResultIcon').className='w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-3 bg-red-500';
+    $('#roundResultTitle').textContent='للأسف إجابة خاطئة';
+    $('#myRoundPoints').innerHTML=`<i class="fa-solid fa-clock"></i> 0 نقطة • حاول في الجولة القادمة`;
+    $('#myRoundPoints').className='inline-flex items-center gap-2 mt-3 bg-white/10 border border-white/15 text-white px-4 py-2 rounded-full font-bold text-sm';
+  } else {
+    $('#roundResultIcon').innerHTML='<i class="fa-solid fa-clock text-white text-xl"></i>';
+    $('#roundResultIcon').className='w-16 h-16 mx-auto rounded-full flex items-center justify-center text-2xl mb-3 bg-zinc-700';
+    $('#roundResultTitle').textContent='انتهى الوقت!';
+    $('#myRoundPoints').innerHTML=`<i class="fa-solid fa-triangle-exclamation"></i> 0 نقطة • لم تجب`;
+    $('#myRoundPoints').className='inline-flex items-center gap-2 mt-3 bg-white/10 border border-white/15 text-white px-4 py-2 rounded-full font-bold text-sm';
   }
-  rifiSocket = io(window.RIFI_SERVER_URL, {transports:["websocket"]});
-  rifiSocket.on("connect", ()=>{
-    rifiSocket.emit("joinRoom", {
-      roomId:"100025",
-      user:localUser
+
+  // ranking sorted by score
+  const sorted=[...players].sort((a,b)=>b.score-a.score);
+  $('#roundRanking').innerHTML=sorted.map((p,i)=>`
+    <div class="flex items-center gap-3 bg-[#0F0F12] border ${p.isMe?'border-[rgba(212,175,55,.35)] bg-[rgba(212,175,55,.08)]':'border-white/5'} rounded-2xl px-3 py-2.5">
+      <span class="w-7 h-7 rounded-full flex items-center justify-center font-black text-xs shrink-0 ${i===0?'rank-gold':i===1?'rank-silver':i===2?'rank-bronze':'bg-white/10 text-zinc-300'}">${i+1}</span>
+      <img src="${p.avatar}" class="w-9 h-9 rounded-full object-cover border border-white/10">
+      <div class="flex-1">
+        <div class="font-bold text-xs flex items-center gap-1">${p.name} ${p.isMe?'<span class="bg-[#FFD700] text-black text-[9px] px-1.5 py-0.5 rounded-full font-black">أنت</span>':''}</div>
+        <div class="text-[11px] ${p.lastCorrect===true?'text-emerald-400':p.lastCorrect===false?'text-red-400':'text-zinc-500'}">${p.lastCorrect===true?'✓ صحيحة • '+p.lastTime.toFixed(1)+'ث':p.lastCorrect===false?'✗ خاطئة':'— لم يجب'}</div>
+      </div>
+      <div class="text-left">
+        <div class="font-black text-sm leading-none">${p.score}</div><div class="text-[10px] text-zinc-500">نقطة</div>
+      </div>
+      ${i===0?'<i class="fa-solid fa-crown text-[#FFD700] text-xs"></i>':''}
+    </div>
+  `).join('');
+
+  const isLast=currentRound===4;
+  $('#nextRoundText').textContent= isLast ? 'النتائج النهائية' : 'الجولة التالية';
+  $('#btnNextRound').innerHTML = isLast ? '<span>النتائج النهائية</span> <i class="fa-solid fa-trophy"></i>' : '<span>الجولة التالية</span> <i class="fa-solid fa-chevron-left"></i>';
+  renderVoiceStrip();
+}
+
+function showFinal(){
+  showView('final');
+  const sorted=[...players].sort((a,b)=>b.score-a.score);
+  // podium
+  const p1=sorted[0], p2=sorted[1], p3=sorted[2];
+  $('#podium1Name').textContent=p1.sub;
+  $('#podium1Score').textContent=p1.score+' نقطة';
+  $('#podium1Img').src=p1.avatar;
+  $('#podium2Name').textContent=p2.sub;
+  $('#podium2Score').textContent=p2.score+' نقطة';
+  $('#podium2Img').src=p2.avatar;
+  $('#podium3Name').textContent=p3.sub;
+  $('#podium3Score').textContent=p3.score+' نقطة';
+  $('#podium3Img').src=p3.avatar;
+
+  $('#finalRanking').innerHTML=sorted.map((p,i)=>`
+    <div class="flex items-center gap-3 rounded-2xl px-3 py-3 ${i===0?'gold-bg text-black':p.isMe?'bg-[rgba(212,175,55,.12)] border border-[rgba(212,175,55,.3)]':'bg-[#0F0F12] border border-white/5'}">
+      <span class="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm shrink-0 ${i===0?'bg-black text-[#FFD700]':i===1?'rank-silver':i===2?'rank-bronze':'bg-white/10 text-white'}">${i+1}</span>
+      <img src="${p.avatar}" class="w-10 h-10 rounded-full object-cover border ${i===0?'border-black/20':'border-white/10'}">
+      <div class="flex-1">
+        <div class="font-black text-sm flex items-center gap-1.5">${p.name} ${p.isMe?'<span class="text-[10px] bg-black text-[#FFD700] px-2 py-0.5 rounded-full">أنت</span>':''} ${i===0?'<i class="fa-solid fa-crown text-black/60"></i>':''}</div>
+        <div class="text-xs ${i===0?'text-black/60':'text-zinc-400'}">${p.score} نقطة • ${p.score>1800?'ممتاز 🔥':p.score>1200?'جيد جداً':'حاول مجدداً'}</div>
+      </div>
+      <div class="font-black text-lg">${p.score}</div>
+    </div>
+  `).join('');
+
+  // confetti
+  launchConfetti();
+  playTone(880,0.2); setTimeout(()=>playTone(1100,0.2),180); setTimeout(()=>playTone(1320,0.5),360);
+  renderVoiceStrip();
+}
+
+function launchConfetti(){
+  const c=$('#confettiCanvas');
+  c.classList.remove('hidden');
+  c.width=window.innerWidth; c.height=window.innerHeight;
+  const ctx=c.getContext('2d');
+  const pieces=[...Array(90)].map(()=>({x:Math.random()*c.width, y:Math.random()*-c.height, r:4+Math.random()*6, col: ['#FFD700','#D4AF37','#FF3B30','#00C950','#60A5FA'][Math.floor(Math.random()*5)], vy:3+Math.random()*5, vx:(Math.random()-0.5)*3, rot:Math.random()*360, vr:(Math.random()-0.5)*8}));
+  let f=0;
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    pieces.forEach(p=>{
+      p.y+=p.vy; p.x+=p.vx; p.rot+=p.vr;
+      if(p.y>c.height) p.y=-10;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.col; ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);
+      ctx.restore();
     });
-  });
-  rifiSocket.on("roomState", state=>{
-    const count = document.querySelector("#room .roomtop .muted");
-    if(count) count.textContent = "ID: 100025 • 👥 " + state.users.length;
-    toast("🟢 تم الاتصال بالغرفة");
-  });
-  rifiSocket.on("systemMessage", msg=>{
-    const chat=document.getElementById("chat");
-    if(chat) chat.insertAdjacentHTML("beforeend",
-      `<div class="msg">🟣 <b>RIFI LIVE</b>: ${msg}</div>`);
-  });
-  rifiSocket.on("userJoined", user=>{
-    toast("👋 دخل " + user.name + " إلى الغرفة");
-  });
-  rifiSocket.on("userLeft", user=>{
-    toast("👋 خرج " + user.name + " من الغرفة");
-  });
-}
-
-const oldShow = window.show;
-window.show = function(id){
-  oldShow(id);
-  if(id==="room" && !rifiSocket) connectRifiRealtime();
-};
-
-function sendRealtimeMessage(text){
-  if(!rifiSocket || !text.trim()) return;
-  rifiSocket.emit("chatMessage", {roomId:"100025", text:text.trim()});
-}
-
-if(typeof window.message === "function"){
-  const oldMessage=window.message;
-  window.message=function(){
-    const text=prompt("اكتب رسالتك");
-    if(text) sendRealtimeMessage(text);
-    else oldMessage();
+    f++;
+    if(f<240) requestAnimationFrame(draw);
+    else {c.classList.add('hidden'); ctx.clearRect(0,0,c.width,c.height);}
   }
+  draw();
 }
-</script>
 
+function openRankingModal(){
+  const sorted=[...players].sort((a,b)=>b.score-a.score);
+  $('#modalRankingList').innerHTML=sorted.map((p,i)=>`
+    <div class="flex items-center gap-3 bg-[#141418] border ${p.isMe?'border-[rgba(212,175,55,.3)]':''} rounded-2xl px-3 py-2.5">
+      <span class="w-7 h-7 rounded-full flex items-center justify-center font-black text-xs ${i===0?'rank-gold':i===1?'rank-silver':i===2?'rank-bronze':'bg-white/10'}">${i+1}</span>
+      <img src="${p.avatar}" class="w-9 h-9 rounded-full object-cover">
+      <div class="flex-1"><div class="font-bold text-sm">${p.name}</div><div class="text-xs text-zinc-400">${p.score} نقطة</div></div>
+      <div class="font-black">${p.score}</div>
+    </div>
+  `).join('');
+  $('#rankingModal').classList.remove('hidden');
+}
+function closeRankingModal(){ $('#rankingModal').classList.add('hidden'); }
+
+// EVENTS
+document.addEventListener('DOMContentLoaded',()=>{
+  renderVoiceStrip(); renderRoomGrid(); renderIntroPlayers();
+
+  $('#btnGoGames').addEventListener('click',()=>{ playTone(650,0.12); showView('games'); });
+  $('#bottomGames').addEventListener('click',()=> showView('games'));
+  $('#btnBackToRoom').addEventListener('click',()=> showView('room'));
+  $('#btnOpenSpeed').addEventListener('click',()=> showView('intro'));
+  $('#cardSpeed').addEventListener('click',()=> showView('intro'));
+  $('#btnIntroBack').addEventListener('click',()=> showView('games'));
+  $('#btnLeaveIntro').addEventListener('click',()=> showView('room'));
+  $('#btnStartGame').addEventListener('click', startWaiting);
+  $('#btnJoinGame').addEventListener('click', startWaiting);
+  $('#btnLeaveGame').addEventListener('click',()=>{
+    if(confirm('هل تريد مغادرة اللعبة والعودة للغرفة؟')){
+      clearInterval(timerInt); botTimeouts.forEach(t=>clearTimeout(t));
+      showView('room'); renderVoiceStrip();
+    }
+  });
+  $('#btnNextRound').addEventListener('click',()=>{
+    if(currentRound<4) startRound(currentRound+1);
+    else showFinal();
+  });
+  $('#btnViewRankingGame').addEventListener('click', openRankingModal);
+  $('#btnViewRankingRound').addEventListener('click', openRankingModal);
+  $('#btnCloseRanking').addEventListener('click', closeRankingModal);
+  $('#btnCloseRanking2').addEventListener('click', closeRankingModal);
+  $('#rankingBackdrop').addEventListener('click', closeRankingModal);
+  $('#btnPlayAgain').addEventListener('click',()=>{
+    resetScores(); showView('intro'); $('#confettiCanvas').classList.add('hidden');
+  });
+  $('#btnReturnToRoom').addEventListener('click',()=>{
+    resetScores(); showView('room'); $('#confettiCanvas').classList.add('hidden');
+  });
+  $('#btnVoiceToggle').addEventListener('click',()=>{
+    isMuted=!isMuted;
+    $('#btnVoiceToggle').innerHTML = isMuted ? '<i class="fa-solid fa-microphone-slash text-white text-xs"></i>' : '<i class="fa-solid fa-microphone text-black text-xs"></i>';
+    $('#btnVoiceToggle').className = isMuted ? 'w-8 h-8 rounded-full bg-red-500 flex items-center justify-center' : 'w-8 h-8 rounded-full gold-bg flex items-center justify-center';
+    renderVoiceStrip();
+    playTone(isMuted?300:700,0.12);
+  });
+
+  // simulate speaking animation refresh
+  setInterval(()=>{ if(currentView!=='final') renderVoiceStrip(); },1800);
+});
+</script>
 </body>
 </html>
